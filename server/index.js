@@ -1,6 +1,5 @@
 import express from "express"
 import dotenv from "dotenv"
-dotenv.config()
 import connectDb from "./config/db.js"
 import authRouter from "./routes/authRoutes.js"
 import cors from "cors"
@@ -8,8 +7,14 @@ import cookieParser from "cookie-parser"
 import userRouter from "./routes/userRoutes.js"
 import geminiResponse from "./gemini.js"
 
+dotenv.config()
 
 const app=express()
+
+await connectDb()
+
+app.use(express.json());
+app.use(cookieParser());
 
 const frontend=process.env.FRONT_END
 app.use(cors({
@@ -28,7 +33,6 @@ app.use("/api/user",userRouter)
 
 
 app.listen(port,()=>{
-    connectDb()
     console.log("server started",port)
 })
 
