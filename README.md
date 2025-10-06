@@ -1,6 +1,6 @@
 # Voice Assistant Project
 
-This is a React-based voice assistant app with AI response using `SpeechSynthesis`.  
+This is a MERN-based voice assistant app with AI response using `SpeechSynthesis`.  
 It listens to user voice commands and responds with AI voice in English.
 
 ## Features
