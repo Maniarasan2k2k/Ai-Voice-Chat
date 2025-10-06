@@ -27,6 +27,7 @@ try {
   console.log(error)
 }
     }
+    
 
     useEffect(()=>{
 handleCurrentUser()
