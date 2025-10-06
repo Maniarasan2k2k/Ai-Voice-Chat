@@ -1,9 +1,8 @@
 import jwt from "jsonwebtoken"
 
-const gentoken = (userId) => {
+const genToken = (userId) => {
   try {
-    const out =jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "10d" });
-    return out
+      return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "10d" });
     // console.log(out);
 } catch (error) {
     console.log(error.message);
@@ -11,4 +10,4 @@ const gentoken = (userId) => {
 };
 
 
-export default gentoken
+export default genToken

@@ -2,6 +2,8 @@
 import geminiResponse from "../gemini.js"
 import User from "../model/UserModel.js"
 import moment from "moment"
+import genToken from "../config/token.js"
+
  export const getCurrentUser=async (req,res)=>{
     try {
         const userId=req.userId
@@ -16,26 +18,38 @@ return res.status(400).json({message:"user not found"})
     }
 }
 
-export const updateAssistant=async (req,res)=>{
-   try {
-      const {assistantName,imageUrl}=req.body
-      let assistantImage;
-if(req.file){
-   assistantImage=await uploadOnCloudinary(req.file.path)
-}else{
-   assistantImage=imageUrl
-}
+export const updateAssistant = async (req, res) => {
+  try {
+    console.log("updateAssistant => req.userId:", req.userId);
+    console.log("updateAssistant => req.body:", req.body);
+    console.log("updateAssistant => req.file:", req.file);
 
-const user=await User.findByIdAndUpdate(req.userId,{
-   assistantName,assistantImage
-},{new:true}).select("-password")
-return res.status(200).json(user)
+    const { assistantName, imageUrl } = req.body;
+    let assistantImage;
 
-      
-   } catch (error) {
-       return res.status(400).json({message:"updateAssistantError user error"}) 
-   }
-}
+    if (req.file) {
+      assistantImage = await uploadOnCloudinary(req.file.path);
+    } else {
+      assistantImage = imageUrl;
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.userId,
+      { assistantName, assistantImage },
+      { new: true }
+    ).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found while updating" });
+    }
+
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error("updateAssistant Error:", error.message);
+    return res.status(400).json({ message: "updateAssistantError user error" });
+  }
+};
+
 
 
 export const askToAssistant=async (req,res)=>{
