@@ -10,8 +10,10 @@ import geminiResponse from "./gemini.js"
 
 
 const app=express()
+
+const frontend=process.env.FRONT_END
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:frontend,
     credentials:true
 }))
 
