@@ -47,7 +47,16 @@ function Home() {
   const speak=(text)=>{
     const utterence=new SpeechSynthesisUtterance(text)
     utterence.lang = 'hi-IN';
-    const voices =window.speechSynthesis.getVoices()
+
+     const loadVoices = () => {
+    const voices = window.speechSynthesis.getVoices();
+
+    if (voices.length === 0) {
+      // voices not loaded yet, 100ms wait
+      setTimeout(loadVoices, 100);
+      return;
+    }
+
     const hindiVoice = voices.find(v => v.lang === 'hi-IN');
     if (hindiVoice) {
       utterence.voice = hindiVoice;
@@ -65,6 +74,8 @@ function Home() {
    synth.cancel(); // 🛑 pehle se koi speech ho to band karo
 synth.speak(utterence);
   }
+   loadVoices(); // start checking voices
+}
 
   const handleCommand=(data)=>{
     const {type,userInput,response}=data
