@@ -14,6 +14,7 @@ const app=express()
 const frontend=process.env.FRONT_END
 app.use(cors({
     origin:frontend,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials:true
 }))
 
