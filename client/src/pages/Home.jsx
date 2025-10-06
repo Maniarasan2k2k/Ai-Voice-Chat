@@ -116,6 +116,7 @@ if (SpeechRecognition) {
 
   recognitionRef.current = recognition;
 
+  const assistantName = userData?.assistantName || "assistant";
   let isMounted = true;  // flag to avoid setState on unmounted component
 
   // Start recognition after 1 second delay only if component still mounted
